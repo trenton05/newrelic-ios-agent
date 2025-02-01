@@ -172,12 +172,12 @@ jobs:
     #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     #     AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         
-    - name: Upload build reports
-      if: failure() && steps.build-step.outcome != 'success'
-      uses: actions/upload-artifact@v3
-      with:
-        name: build-reports
-        path: /Users/runner/Library/Logs/fastlane/xcbuild/
+    # - name: Upload build reports
+    #   if: failure() && steps.build-step.outcome != 'success'
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: build-reports
+    #     path: /Users/runner/Library/Logs/fastlane/xcbuild/
 
   # Create NewRelicAgent.podspec & Package.swift with new version number and checksum.
   deployStagingSpecs:
