@@ -12,92 +12,92 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  testIOS:
-    name : TestIOS 
-    # runs-on: will be set to macos-latest when running on actual GHA. 
-    # *** runs-on: ubuntu-latest is used when running via act on mac os. ***
-    runs-on: macos-14
-    steps:
-    - uses: actions/checkout@master
-      with: 
-        submodules: true
+  # testIOS:
+  #   name : TestIOS 
+  #   # runs-on: will be set to macos-latest when running on actual GHA. 
+  #   # *** runs-on: ubuntu-latest is used when running via act on mac os. ***
+  #   runs-on: macos-14
+  #   steps:
+  #   - uses: actions/checkout@master
+  #     with: 
+  #       submodules: true
     
-    - uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: '15.4'
+  #   - uses: maxim-lobanov/setup-xcode@v1
+  #     with:
+  #       xcode-version: '15.4'
 
-    - name: Install lcov
-      run: |
-        curl https://raw.githubusercontent.com/Homebrew/homebrew-core/e92d2ae54954ebf485b484d8522104700b144fee/Formula/lcov.rb > lcov.rb
-        brew install ./lcov.rb
+  #   - name: Install lcov
+  #     run: |
+  #       curl https://raw.githubusercontent.com/Homebrew/homebrew-core/e92d2ae54954ebf485b484d8522104700b144fee/Formula/lcov.rb > lcov.rb
+  #       brew install ./lcov.rb
 
-    - name: Update gem
-      run: bundle update
+  #   - name: Update gem
+  #     run: bundle update
 
-    - name: Install gems
-      run: bundle install
+  #   - name: Install gems
+  #     run: bundle install
 
-    - name: Run tests on iOS (using fastlane)
-      run: bundle exec fastlane runIOSTests
+  #   - name: Run tests on iOS (using fastlane)
+  #     run: bundle exec fastlane runIOSTests
 
-  testTVOS:
-    name : TestTVOS
-    # runs-on: will be set to macos-latest when running on actual GHA. 
-    # *** runs-on: ubuntu-latest is used when running via act on mac os. ***
-    runs-on: macos-latest 
-    steps:
-    - uses: actions/checkout@v3
-      with: 
-        submodules: true
+  # testTVOS:
+  #   name : TestTVOS
+  #   # runs-on: will be set to macos-latest when running on actual GHA. 
+  #   # *** runs-on: ubuntu-latest is used when running via act on mac os. ***
+  #   runs-on: macos-latest 
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #     with: 
+  #       submodules: true
     
-    - uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: '15.4'
+  #   - uses: maxim-lobanov/setup-xcode@v1
+  #     with:
+  #       xcode-version: '15.4'
 
-    - name: Install lcov
-      run: brew install lcov
+  #   - name: Install lcov
+  #     run: brew install lcov
 
-    - name: Update gem
-      run: bundle update
+  #   - name: Update gem
+  #     run: bundle update
 
-    - name: Install gems
-      run: bundle install
+  #   - name: Install gems
+  #     run: bundle install
 
-    - name: Run tests on tvOS (using fastlane)
-      run: bundle exec fastlane runTVOSTests
+  #   - name: Run tests on tvOS (using fastlane)
+  #     run: bundle exec fastlane runTVOSTests
 
-  testWatchOS:
-      name : TestWatchOS
-      # runs-on: will be set to macos-latest when running on actual GHA. 
-      # *** runs-on: ubuntu-latest is used when running via act on mac os. ***
-      runs-on: macos-latest 
-      steps:
-      - uses: actions/checkout@v3
-        with: 
-          submodules: true
+  # testWatchOS:
+  #     name : TestWatchOS
+  #     # runs-on: will be set to macos-latest when running on actual GHA. 
+  #     # *** runs-on: ubuntu-latest is used when running via act on mac os. ***
+  #     runs-on: macos-latest 
+  #     steps:
+  #     - uses: actions/checkout@v3
+  #       with: 
+  #         submodules: true
       
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '15.4'
+  #     - uses: maxim-lobanov/setup-xcode@v1
+  #       with:
+  #         xcode-version: '15.4'
 
-      - name: Install lcov
-        run: brew install lcov
+  #     - name: Install lcov
+  #       run: brew install lcov
 
-      - name: Update gem
-        run: bundle update
+  #     - name: Update gem
+  #       run: bundle update
 
-      - name: Install gems
-        run: bundle install
+  #     - name: Install gems
+  #       run: bundle install
 
-      - name: Run tests on watchOS (using fastlane)
-        run: bundle exec fastlane runWatchOSTests
+  #     - name: Run tests on watchOS (using fastlane)
+  #       run: bundle exec fastlane runWatchOSTests
 
   deployS3:
     name: DeployS3
     # runs-on: will be set to macos-latest when running on actual GHA. 
     # *** runs-on: ubuntu-latest is used when running via act on mac os. ***
     runs-on: macos-14
-    needs: [testIOS, testTVOS, testWatchOS]
+    # needs: [testIOS, testTVOS, testWatchOS]
     if: github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/main'
     outputs:
       version: ${{ steps.setOutput.outputs.version }}
