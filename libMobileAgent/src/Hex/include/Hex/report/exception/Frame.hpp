@@ -33,7 +33,6 @@ namespace NewRelic {
 
                 static uint64_t frameStringToAddress(const char* frame);
 
-            private:
                 std::string _value;
                 int64_t _lineNumber;
                 uint64_t _address;

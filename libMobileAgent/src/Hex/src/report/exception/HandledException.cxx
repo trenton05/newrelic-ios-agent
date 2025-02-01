@@ -33,17 +33,29 @@ HandledException::serialize(flatbuffers::FlatBufferBuilder& builder) const {
     auto fbsName = builder.CreateString(_name);
 
     std::vector<Offset<fbs::hex::Thread>> threads;
+    std::vector<Offset<fbs::ios::Library>> libraries;
+
+    bool hasCustom = false;
     for (auto const& t : _threads) {
         threads.push_back(t->serialize(builder));
+        for (auto const& f : t->_frames) {
+            if ((f._address & 0xff00000000000000L) == 0xff00000000000000L){
+                hasCustom = true;
+                auto name_string = std::string(f._value);
+                
+                Library library(name_string, f._address, f._address, f._address, true, fbs::ios::Arch::Arch_arm64, 256);
+                libraries.push_back(library.serialize(builder));
+            }
+        }
     }
 
     auto fbsThreads = builder.CreateVector(threads);
-
-    auto libraries = buildLibraries(builder);
+    
+//    auto libraries = buildLibraries(builder);
 
     auto appImage = LibraryController::getInstance().getAppImage();
 
-    auto fbsLibraries = builder.CreateVector(libraries);
+    auto fbsLibraries = builder.CreateVector(hasCustom ? libraries : buildLibraries(builder));
 
     auto fbsHandledException = fbs::hex::HandledExceptionBuilder(builder);
     fbsHandledException.add_appUuidLow(appImage.uuidLow());

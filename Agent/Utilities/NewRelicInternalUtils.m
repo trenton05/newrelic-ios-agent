@@ -136,7 +136,7 @@ static NSString* _osVersion;
         return NRMA_OSNAME_TVOS;
     }
 
-    return NRMA_OSNAME_IOS;
+    return NRMA_OSNAME_IOS; // @"Android"; // NRMA_OSNAME_IOS;
 #endif
 }
 
@@ -147,7 +147,7 @@ static NSString* _osVersion;
     if ([[[UIDevice currentDevice] systemName] isEqualToString:NRMA_OSNAME_TVOS]) {
         return @"tvOSAgent";
     }
-    return @"iOSAgent";
+    return @"iOSAgent"; // @"AndroidAgent"; // @"iOSAgent";
 #endif
 }
 

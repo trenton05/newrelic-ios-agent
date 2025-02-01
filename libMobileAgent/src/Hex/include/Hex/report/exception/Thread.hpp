@@ -21,7 +21,6 @@ namespace NewRelic {
 
                 Offset<fbs::hex::Thread> serialize(flatbuffers::FlatBufferBuilder& builder) const;
 
-            private:
                 std::vector<Frame> _frames;
 
 

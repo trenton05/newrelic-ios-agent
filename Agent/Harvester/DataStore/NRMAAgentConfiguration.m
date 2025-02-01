@@ -17,7 +17,7 @@
 
 static NSString* __NRMA__customAppVersionString = nil;
 static NSString* __NRMA__customAppBuildString = nil;
-static NRMAApplicationPlatform __NRMA__applicationPlatform = NRMAPlatform_Native;
+static NRMAApplicationPlatform __NRMA__applicationPlatform = NRMAPlatform_Native; // NRMAPlatform_ReactNative; // NRMAPlatform_Native;
 static NSString* __NRMA__applicationPlatformVersion = nil;
 
 // Default max event buffer time is 10 minutes (600 seconds).
