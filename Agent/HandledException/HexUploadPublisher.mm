@@ -26,7 +26,7 @@ namespace NewRelic {
 
         void HexUploadPublisher::publish(std::shared_ptr<NewRelic::Hex::HexContext>const& context) {
 
-            auto buf = context->getBuilder()->GetBufferPointer();
+            auto buf = context->getBuilder()->GetCurrentBufferPointer();
             auto size = context->getBuilder()->GetSize();
 
             @autoreleasepool {
