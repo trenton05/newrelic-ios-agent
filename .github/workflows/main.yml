@@ -155,12 +155,22 @@ jobs:
       name: Print name
       run: echo "version=${{ env.version }}"  >> $GITHUB_OUTPUT
 
-    - name: Deploy to staging S3
-      run: "aws s3 cp NewRelic_XCFramework_Agent_${{ env.version }}.zip s3://nr-downloads-main/ios-v5/"
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+    # in case we need to manually upload the bundle to the Google Play Store
+    - name: Save bundle
+      if: inputs.targetEnvironment == 'prod'
+      uses: actions/upload-artifact@v4
+      with:
+        name: framework.zip
+        path: NewRelic_XCFramework_Agent_${{ env.version }}.zip
+        retention-days: 7
+        
+    # - name: Deploy to staging S3
+    #   run: "aws s3 cp NewRelic_XCFramework_Agent_${{ env.version }}.zip s3://nr-downloads-main/ios-v5/"
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         
     - name: Upload build reports
       if: failure() && steps.build-step.outcome != 'success'
