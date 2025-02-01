@@ -161,8 +161,8 @@ jobs:
       if: inputs.targetEnvironment == 'prod'
       uses: actions/upload-artifact@v4
       with:
-        name: framework.zip
-        path: NewRelic_XCFramework_Agent_${{ env.version }}.zip
+        name: framework
+        path: NewRelic.xcframework
         retention-days: 7
         
     # - name: Deploy to staging S3
