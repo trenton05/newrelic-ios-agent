@@ -318,8 +318,12 @@ const NSString* kHexBackupStoreFolder = @"hexbkup/";
     std::vector<NewRelic::Hex::Report::Frame> frameVector;
 
     // We want to use callStackReturnAddresses rather than callStackSymbols It is a much less expensive call, and symbols will not be available On symbol-stripped binaries, anyway.
-    for (NSNumber* frame in exception.callStackReturnAddresses) {
-        frameVector.push_back(NewRelic::Hex::Report::Frame(" ", [frame unsignedLongLongValue]));
+    // for (NSNumber* frame in exception.callStackReturnAddresses) {
+    //     frameVector.push_back(NewRelic::Hex::Report::Frame(" ", [frame unsignedLongLongValue]));
+    // }
+    
+    for (int i = 0; i < exception.callStackReturnAddresses.count; i++) {
+        frameVector.push_back(NewRelic::Hex::Report::Frame(exception.callStackSymbols[i], [exception.callStackReturnAddresses[i] unsignedLongLongValue]));
     }
     threadVector.push_back(std::make_shared<NewRelic::Hex::Report::Thread>(frameVector));
     return threadVector;
