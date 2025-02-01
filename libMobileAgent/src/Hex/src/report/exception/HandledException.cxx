@@ -43,7 +43,7 @@ HandledException::serialize(flatbuffers::FlatBufferBuilder& builder) const {
                 hasCustom = true;
                 auto name_string = std::string(f._value);
                 
-                Library library(name_string, f._address, f._address, f._address, true, fbs::ios::Arch::Arch_arm64, 256);
+                Library library(name_string, f._address, f._address, f._address - 8, true, fbs::ios::Arch::Arch_arm64, 1024);
                 libraries.push_back(library.serialize(builder));
             }
         }
