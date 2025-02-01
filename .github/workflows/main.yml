@@ -146,7 +146,7 @@ jobs:
       run: bundle install
 
     - name: Build NewRelic.xcframework (using fastlane)
-      run: bundle exec fastlane buildAndZip
+      run: bundle exec fastlane buildFrameworkIOSOnly
 
     - name: Get name
       run: echo "version=$(cat fastlane/build_version)" >> $GITHUB_ENV
