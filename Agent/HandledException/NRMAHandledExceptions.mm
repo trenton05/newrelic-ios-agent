@@ -323,7 +323,7 @@ const NSString* kHexBackupStoreFolder = @"hexbkup/";
     // }
     
     for (int i = 0; i < exception.callStackReturnAddresses.count; i++) {
-        frameVector.push_back(NewRelic::Hex::Report::Frame(exception.callStackSymbols[i], [exception.callStackReturnAddresses[i] unsignedLongLongValue]));
+        frameVector.push_back(NewRelic::Hex::Report::Frame([exception.callStackSymbols[i] cStringUsingEncoding:kCFStringEncodingUTF8], [exception.callStackReturnAddresses[i] unsignedLongLongValue]));
     }
     threadVector.push_back(std::make_shared<NewRelic::Hex::Report::Thread>(frameVector));
     return threadVector;
