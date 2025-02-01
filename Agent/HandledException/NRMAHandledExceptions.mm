@@ -333,6 +333,7 @@ const NSString* kHexBackupStoreFolder = @"hexbkup/";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         auto context = _persistenceManager->retrieveStoreReports();
         if (context) {
+            context->finalize();
             _publisher->publish(context);
         }
     });
