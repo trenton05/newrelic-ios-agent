@@ -11,13 +11,17 @@ using namespace NewRelic::Hex::Report;
 
 Frame::Frame(const char* value,
              uint64_t address) : _value(value), _className(""), _methodName(""),
-                                 _fileName(""), _lineNumber(0), _address(address), _type(native) {}
+                                 _fileName(""), _lineNumber(0), _address(address), _type(native), _custom(false) {}
+
+Frame::Frame(const char* value,
+             uint64_t address, bool custom) : _value(value), _className(""), _methodName(""),
+                                 _fileName(""), _lineNumber(0), _address(address), _type(native), _custom(custom) {}
 
 Frame::Frame(const char* className,
              const char* methodName,
              const char* fileName,
              int64_t lineNumber) : _value(""), _className(className), _methodName(methodName),
-                                   _fileName(fileName), _lineNumber(lineNumber), _address(0), _type(hybrid) {}
+                                   _fileName(fileName), _lineNumber(lineNumber), _address(0), _type(hybrid), _custom(false) {}
 
 Offset<fbs::hex::Frame> Frame::serialize(flatbuffers::FlatBufferBuilder& builder) const {
 

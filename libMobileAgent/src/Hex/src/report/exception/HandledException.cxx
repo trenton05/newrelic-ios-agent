@@ -39,11 +39,11 @@ HandledException::serialize(flatbuffers::FlatBufferBuilder& builder) const {
     for (auto const& t : _threads) {
         threads.push_back(t->serialize(builder));
         for (auto const& f : t->_frames) {
-            if ((f._address & 0xff00000000000000L) == 0xff00000000000000L){
+            if (f._custom) {
                 hasCustom = true;
                 auto name_string = std::string(f._value);
                 
-                Library library(name_string, f._address, f._address, f._address - 8, true, fbs::ios::Arch::Arch_arm64, 1024);
+                Library library(name_string, f._address, f._address, f._address, true, fbs::ios::Arch::Arch_arm64, 1024);
                 libraries.push_back(library.serialize(builder));
             }
         }

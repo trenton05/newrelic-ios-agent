@@ -23,6 +23,8 @@ namespace NewRelic {
                 // Native Stack Trace
                 Frame(const char* value,
                       uint64_t address);
+                Frame(const char* value,
+                      uint64_t address, bool custom);
                 // Hybrid Stack Trace
                 Frame(const char* className,
                       const char* methodName,
@@ -33,6 +35,7 @@ namespace NewRelic {
 
                 static uint64_t frameStringToAddress(const char* frame);
 
+                bool _custom;
                 std::string _value;
                 int64_t _lineNumber;
                 uint64_t _address;
